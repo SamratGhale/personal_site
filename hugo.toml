@@ -3,3 +3,6 @@ languageCode = 'en-us'
 title = "Samrat's blogs"
 description = "Every genius makes it more complicated. It takes a super-genius to make is simpler."
 theme = 'nostyleplease'
+
+[markup.goldmark.renderer]
+  unsafe = true # Allow HTML in md files

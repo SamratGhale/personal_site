@@ -5,7 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
    <meta name="description" content="This is my blog documenting the process of creating a chess engine and running it in a esp32.
 The project has 4 seperate parts
-The chess engine Chess AI ESP32 ui ESP32 Networking I will be dealing with these topic in the given order. And I&rsquo;ll be updating the code in this repo.">  
+
+The chess engine
+Chess AI
+ESP32 ui
+ESP32 Networking
+
+I will be dealing with these topic in the given order. And I&rsquo;ll be updating the code in this repo.
+Move calculation
+The chess engine needs to calculate the possible move a piece can make
+It should check where the piece is which positions can the piece moves into
+I have Implemented a very basic version of the move calculation (only for pawn and knight fow now) shown below.">  
 
   <title>
     
@@ -29,8 +39,8 @@ The chess engine Chess AI ESP32 ui ESP32 Networking I will be dealing with these
 
 <article>
     <p class="post-meta">
-        <time datetime="2024-01-14 07:07:07 &#43;0100 &#43;0100">
-            2024-01-14
+        <time datetime="2024-07-06 00:00:00 &#43;0000 UTC">
+            2024-07-06
         </time>
     </p>
 
@@ -47,7 +57,56 @@ The chess engine Chess AI ESP32 ui ESP32 Networking I will be dealing with these
 <li>ESP32 Networking</li>
 </ol>
 <p>I will be dealing with these topic in the given order. And I&rsquo;ll be updating the code in this <a href="https://github.com/SamratGhale/chessmate">repo</a>.</p>
-
+<h2 id="move-calculation">Move calculation</h2>
+<p>The chess engine needs to calculate the possible move a piece can make
+It should check where the piece is which positions can the piece moves into</p>
+<p>I have Implemented a very basic version of the move calculation (only for pawn and knight fow now) shown below.</p>
+<div id='viz1504830938123'>
+<video width="700" height="400" controls>
+  <source src="/chess_first_demo.mp4" type="video/mp4">
+</video>
+</div>
+<h1 id="implementation">Implementation</h1>
+<p>Everytime the player clicks on the piece the engine calculates the possible moves in the linked list.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> Move Move;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> Move
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  Pos start, end;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Move<span style="color:#f92672">*</span> next;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span>{
+</span></span><span style="display:flex;"><span>  CMPieces  pieces[<span style="color:#ae81ff">64</span>];
+</span></span><span style="display:flex;"><span>  Pos       selected;
+</span></span><span style="display:flex;"><span>  Move<span style="color:#f92672">*</span>     possible_moves;
+</span></span><span style="display:flex;"><span>  Texture2D textures[<span style="color:#ae81ff">13</span>]; <span style="color:#75715e">//leave the first one blank because it&#39;s none
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> fen;
+</span></span><span style="display:flex;"><span>}CMBoardState;
+</span></span></code></pre></div><p>And when the player clicks on one of the position in the list. It moves the piece to that position</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">cm_make_move</span>(CMBoardState<span style="color:#f92672">*</span> board, Pos p){
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Move<span style="color:#f92672">*</span> curr <span style="color:#f92672">=</span> board<span style="color:#f92672">-&gt;</span>possible_moves;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">bool</span> found <span style="color:#f92672">=</span> false;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span>(curr){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">is_pos_equal</span>(curr<span style="color:#f92672">-&gt;</span>end, p)){
+</span></span><span style="display:flex;"><span>      found <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      CMPieces piece <span style="color:#f92672">=</span> <span style="color:#a6e22e">cm_get_piece_from_pos</span>(board, curr<span style="color:#f92672">-&gt;</span>start);
+</span></span><span style="display:flex;"><span>      i8 i <span style="color:#f92672">=</span> <span style="color:#a6e22e">cm_pos_to_index</span>(curr<span style="color:#f92672">-&gt;</span>start.x , curr<span style="color:#f92672">-&gt;</span>start.y);
+</span></span><span style="display:flex;"><span>      board<span style="color:#f92672">-&gt;</span>pieces[i] <span style="color:#f92672">=</span> NONE;
+</span></span><span style="display:flex;"><span>      board<span style="color:#f92672">-&gt;</span>pieces[<span style="color:#a6e22e">cm_pos_to_index</span>(curr<span style="color:#f92672">-&gt;</span>end.x, curr<span style="color:#f92672">-&gt;</span>end.y)] <span style="color:#f92672">=</span> piece;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    curr <span style="color:#f92672">=</span> curr<span style="color:#f92672">-&gt;</span>next;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> found;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </article>
 
             </div>

@@ -2,6 +2,8 @@
   [module.hugoVersion]
     extended=true
     min = "0.41.0"
+[markup.goldmark.renderer]
+  unsafe = true # Allow HTML in md files
 
 [markup]
   [markup.goldmark]
