@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="&lsquo;An idiot admires complexity, a genius admires simplicity&rsquo; - Terry A Davis The more i&rsquo;ve programmed in C the more i&rsquo;ve admired it&rsquo;s simplicity. Even when i&rsquo;m working on different programming languages I always try to think of problems in terms of how it would be implemented in C.
+I want to give examples of features and explain why it&rsquo;s simpler than other programming languages.
+1. The C compilers The compiler has a very simple job; to turn C code to assembly (machine code).">  
+
+  <title>
+    
+      The simplicity of C
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.0d9f7bcd68624ecfaf455954ecc6dba8a898360990361ecd9c617881d76d05f894a99526679b73d9a15febf31370331a2167ba9ec28f2b9c094c77576ec3d947.css" integrity="sha512-DZ97zWhiTs&#43;vRVlU7MbbqKiYNgmQNh7NnGF4gddtBfiUqZUmZ5tz2aFf6/MTcDMaIWe6nsKPK5wJTHdXbsPZRw==" />
+  
+</head>
+<body a="light">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-07-19 00:00:00 &#43;0000 UTC">
+            2024-07-19
+        </time>
+    </p>
+
+    <h1>The simplicity of C</h1>
+
+    
+
+    <h3 id="an-idiot-admires-complexity-a-genius-admires-simplicity---terry-a-davis">&lsquo;An idiot admires complexity, a genius admires simplicity&rsquo; - Terry A Davis</h3>
+<p>The more i&rsquo;ve programmed in C the more i&rsquo;ve admired it&rsquo;s simplicity.
+Even when i&rsquo;m working on different programming languages I always try to think of problems in terms of how it would be implemented in C.</p>
+<p>I want to give examples of features and explain why it&rsquo;s simpler than other programming languages.</p>
+<h3 id="1-the-c-compilers">1. The C compilers</h3>
+<p>The compiler has a very simple job; to turn C code to assembly (machine code). The compiler does many other stuffs like optimization and linking etc but turning C code to assembly is it&rsquo;s main job.
+And the compiler does this task in a non complicated way</p>
+<p><img src="/c_cat.PNG" alt="alt text"></p>
+<p>When we look at the assembly produced by gcc for the given code this is what we get.</p>
+<p><img src="/c_assembly_cat.PNG" alt=""></p>
+<p>If you  just know some basic assembly we can reason about the things that the compiler produced. It loaded some constant string called &ldquo;Hello world&rdquo;, it has a section called main where it loaded the number 2 and 100 to some register, it multiplied them and called the printf function and exited.</p>
+<p>As a programmer we should learn to treat compiler as a friend. Compiler isn&rsquo;t gonna fix all the bugs for you, it is gonna point out error, it&rsquo;s not magic, it&rsquo;s a tool.</p>
+<h3 id="2-low-level">2. Low level</h3>
+<p>If gcc is a translater from c to assembly, then C is just a high level assembly, turns out it really helps thinking that way.</p>
+<p>Unlike other high level languages C dosen&rsquo;t limit you from thinking in low level as assembly. You pretty much have full controll over what goes into your executable.
+Some of the few things c provides that helps you get full control of your programs are; manual memory management, control over struct layout, pointers, c calling convention.</p>
+
+</article>
+
+            </div>
+        </main>
+    </body></html>

@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Samrat&#39;s blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://samratghale.github.io:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The simplicity of C</title>
+      <link>https://samratghale.github.io:1313/posts/programming/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://samratghale.github.io:1313/posts/programming/</guid>
+      <description>&amp;lsquo;An idiot admires complexity, a genius admires simplicity&amp;rsquo; - Terry A Davis The more i&amp;rsquo;ve programmed in C the more i&amp;rsquo;ve admired it&amp;rsquo;s simplicity. Even when i&amp;rsquo;m working on different programming languages I always try to think of problems in terms of how it would be implemented in C.&#xA;I want to give examples of features and explain why it&amp;rsquo;s simpler than other programming languages.&#xA;1. The C compilers The compiler has a very simple job; to turn C code to assembly (machine code).</description>
+    </item>
     <item>
       <title>Chess inside Esp32</title>
       <link>https://samratghale.github.io:1313/posts/esp32/</link>
